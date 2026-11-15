@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import explain from '../netlify/functions/flame-ai.mjs';
 
-const url = 'https://flame-evidence-ai.netlify.app/flame-ai';
+const url = 'https://flame-ai.example.test/flame-ai';
 const origin = 'https://shanxiaohu123.github.io';
 const questions = {
   en: 'What do the 284 tests in the FLEX report represent?',
