@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="description" content="Explore traceable NASA microgravity combustion evidence.">
+ <title>Flame Evidence Explorer</title>
+ <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><div class="wrap">
+ <div class="masthead">
+  <p class="eyebrow">FLAME IN FREEFALL</p>
+  <label class="language-picker" for="language"><span data-zh="语言">Language</span>
+   <select id="language"><option value="en" lang="en">English</option><option value="zh" lang="zh-CN">中文</option></select>
+  </label>
+ </div>
+ <h1>Flame Evidence Explorer</h1>
+ <p class="lead" data-zh="检索 NASA 微重力燃烧研究，了解证据及其适用范围。">Find NASA microgravity combustion studies and understand what their evidence supports.</p>
+ <div class="chips"><span data-zh="NASA 原始出处">NASA sources</span><span data-zh="透明关键词排序">Keyword ranking</span><span data-zh="声明级证据">Claim-level evidence</span></div>
+</div></header>
+<main class="wrap">
+ <div class="notice">
+  <b data-zh="数据来源">Data sources</b> · <span data-zh="NASA 文献摘要、报告正文和 PSI 实验汇总表。">NASA abstracts, report text, and the PSI experiment summary table.</span>
+  <span class="mode-label"><span data-zh="问答模式">Answer mode</span> · <strong id="modeText"></strong></span>
+ </div>
+ <section class="stats" aria-label="Data coverage" data-zh-aria="数据覆盖">
+  <div><strong id="sourceCount">—</strong><span data-zh="NASA 来源">NASA sources</span></div>
+  <div><strong id="claimCount">—</strong><span data-zh="摘要证据">Abstract evidence</span></div>
+  <div><strong id="fulltextCount">—</strong><span data-zh="全文证据">Full-text evidence</span></div>
+  <div><strong id="officialRowsCount">—</strong><span data-zh="官方实验表记录">Official experiment table records</span></div>
+ </section>
+ <nav class="tabs" aria-label="Sections" data-zh-aria="功能页面">
+  <button class="active" data-tab="explore" data-zh="01 找研究">01 Find studies</button>
+  <button data-tab="compare" data-zh="02 比较研究范围">02 Compare study scope</button>
+  <button data-tab="ask" data-zh="03 问题与证据">03 Questions and evidence</button>
+  <button data-tab="flex-case" data-zh="FLEX 深入案例">FLEX case study</button>
+ </nav>
+ <section id="explore" class="panel">
+  <div class="two">
+   <aside>
+    <h2 data-zh="从问题出发">Start with a question</h2>
+    <label for="search" data-zh="检索研究或测量主题">Search studies or measurements</label>
+    <input id="search" placeholder="Smoke particle size, ventilation, FLEX" data-zh-placeholder="例如：烟雾粒径、通风、FLEX">
+    <label for="theme" data-zh="研究主题">Research topic</label>
+    <select id="theme"><option value="" data-zh="全部主题">All topics</option><option value="固体燃烧" data-zh="固体燃烧">Solid fuel combustion</option><option value="烟雾探测" data-zh="烟雾探测">Smoke detection</option><option value="液滴燃烧" data-zh="液滴燃烧">Droplet combustion</option></select>
+    <p class="muted" data-zh="结果按关键词匹配排序。">Results are ranked by matching keywords.</p>
+    <button id="downloadData" class="secondary" data-zh="导出证据库 JSON">Export evidence library (JSON)</button>
+   </aside>
+   <div><div class="sectionhead"><h2 data-zh="研究证据">Study evidence</h2><span id="resultCount" class="muted"></span></div><p id="queryWarning" class="warning" hidden></p><div id="results"></div></div>
+  </div>
+ </section>
+ <section id="compare" class="panel" hidden>
+  <h2 data-zh="比较研究范围">Compare study scope</h2>
+  <p class="muted" data-zh="选择两项研究，并列查看研究对象、实验平台、条件和观测结果。">Select two studies to compare their subjects, platforms, conditions, and observations.</p>
+  <div class="compareControls"><label><span data-zh="研究 A">Study A</span><select id="compareA"></select></label><label><span data-zh="研究 B">Study B</span><select id="compareB"></select></label></div><div id="compareResult"></div>
+ </section>
+ <section id="ask" class="panel" hidden>
+  <div class="two">
+   <aside><h2 data-zh="示例问题">Example questions</h2><div id="examples"></div></aside>
+   <div><h2 data-zh="从问题到证据">From question to evidence</h2><label for="question" data-zh="研究问题">Research question</label>
+    <textarea id="question" rows="3" maxlength="1200"></textarea>
+    <div class="actionrow"><button id="askEvidence" data-zh="检索证据">Find evidence</button><button id="askLive" class="secondary" hidden disabled></button><button id="exportBrief" class="secondary" disabled data-zh="导出当前简报">Export current brief</button></div>
+    <p id="answerStatus" aria-live="polite"></p><div id="answer"></div>
+   </div>
+  </div>
+ </section>
+ <section id="flex-case" class="panel" hidden>
+  <h2 data-zh="FLEX 液滴实验">FLEX droplet experiments</h2>
+  <p data-zh="在选定燃料和初始气体配比下，NASA 实验表记录了哪些液滴直径和燃烧时长？">What droplet diameters and burn times did NASA record for the selected fuel and initial gas mixture?</p>
+  <div id="flexSource" class="card"></div><div class="flex-filters" id="flexFilters"></div>
+  <p id="flexSummary" aria-live="polite"></p><p id="flexComparison" class="muted"></p>
+  <figure id="flexChart" class="card flex-chart"></figure>
+  <div id="flexTable" class="tablewrap flex-table" tabindex="0" aria-label="Filtered FLEX records" data-zh-aria="筛选后的 FLEX 记录"></div>
+  <div id="flexEvidence"></div>
+  <div class="actionrow"><button id="flexExportData" class="secondary" data-zh="导出筛选记录 JSON">Export filtered records (JSON)</button><button id="flexExportBrief" data-zh="导出案例简报">Export case brief</button></div>
+ </section>
+</main>
+<script src="data.js"></script><script src="app.js"></script>
+</body>
+</html>
