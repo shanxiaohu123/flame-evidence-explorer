@@ -273,6 +273,8 @@ function boot(){
  let answerRevision=0;
  let busy=false;
  let apiConfig=null;
+ const localApi=/^https?:$/.test(location.protocol)&&['127.0.0.1','localhost','[::1]'].includes(location.hostname);
+ const hostedApi=location.origin==='https://shanxiaohu123.github.io'?document.querySelector('meta[name="flame-ai-endpoint"]')?.content:'';
  const caseStudy=data.case_study;
  const renderFlex=renderFlexCase(caseStudy,download);
  $('sourceCount').textContent=new Set([...data.sources,caseStudy.source].map(source=>source.id)).size;
@@ -410,7 +412,7 @@ function boot(){
   renderApi();
   $('answerStatus').textContent=t(providerName()+' 正在生成解释…',providerName()+' is preparing an explanation…');
   try{
-   const response=await fetch('/api/explain',{method:'POST',headers:{'Content-Type':'application/json'},
+   const response=await fetch(localApi?'/api/explain':hostedApi,{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({question:q,language}),signal:AbortSignal.timeout(45000)});
    const out=await response.json();
    if(revision!==answerRevision)return;
@@ -436,9 +438,9 @@ function boot(){
   }
  });
  async function checkApi(){
-  if(!/^https?:$/.test(location.protocol)||!['127.0.0.1','localhost','[::1]'].includes(location.hostname))return;
+  if(!localApi&&!hostedApi)return;
   try{
-   const response=await fetch('/api/config',{signal:AbortSignal.timeout(3000)});
+   const response=await fetch(localApi?'/api/config':hostedApi,{signal:AbortSignal.timeout(5000)});
    if(response.ok){apiConfig=await response.json();renderApi();}
   }catch(_){/* Static mode stays available. */}
  }
