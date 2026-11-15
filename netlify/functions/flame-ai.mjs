@@ -6,7 +6,7 @@ const origin = 'https://shanxiaohu123.github.io';
 
 export const config = {
   path: '/flame-ai',
-  rateLimit: {action: 'rate_limit', aggregateBy: 'domain', windowSize: 60, windowLimit: 30},
+  rateLimit: {action: 'rate_limit', aggregateBy: ['ip', 'domain'], windowSize: 60, windowLimit: 18},
 };
 
 function validatedAnswer(answer, allowedIds) {
